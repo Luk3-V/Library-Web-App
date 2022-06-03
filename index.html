@@ -9,15 +9,21 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <span class="col">Title</span>
-            <span class="col">Author</span>
-            <span class="col">Pages</span>
-            <span class="col">Status</span>
-        </div>
-        <div class="table">           
-        </div>
         <button class="btn add">+ Add Book</button>
+        <table>
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Author</td>
+                    <td>Pages</td>
+                    <td>Status</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
     </div>
     <div class="popup">
         <div class="wrapper">
@@ -30,7 +36,7 @@
                 <input type="number" id="pages" name="pages" required>
                 <label for="status">Status</label>
                 <select name="status" id="status">
-                    <option value="Unread" selected>Unread</option>
+                    <option value="Not Read" selected>Not Read</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Read">Read</option>
                  </select>

@@ -4,15 +4,29 @@
 	padding: 0;
 }
 
-.row {
+.container {
+    margin: auto;
+    padding: 20px;
+    max-width: 900px;
+}
+
+table {
     width: 100%;
-    display: flex;
-    padding: 10px 0;
-    border-bottom: 2px solid black;
+    border-collapse: collapse;
 }
-.col {
-    min-width: 200px;
+tr {
+    border-bottom: 1px solid black;
 }
+td {
+    padding: 10px 10px;
+}
+td:first-child {
+    padding-left: 0; 
+}
+td:last-child {
+    padding-right: 0; 
+}
+
 
 .popup {
     position: absolute;
