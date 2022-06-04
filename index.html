@@ -6,10 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Web App</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <button class="btn add">+ Add Book</button>
+        <h1>library</h1>
+        <div class="menu"> 
+            <div class="stats">
+                <span>Total Books:<span class="totalCount">0</span></span>
+                <span>Books Read:<span class="readCount">0</span></span>
+            </div>
+            <button class="addBtn">+ Add Book</button>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -21,13 +29,12 @@
                 </tr>
             </thead>
             <tbody>
-
             </tbody>
         </table>
     </div>
-    <div class="popup">
+    <div class="modal addModal">
         <div class="wrapper">
-            <form class="bookForm">
+            <form class="addForm">
                 <label for="title">Book Title</label>
                 <input type="text" id="title" name="title" required>
                 <label for="author">Book Author</label>
@@ -40,8 +47,29 @@
                     <option value="In Progress">In Progress</option>
                     <option value="Read">Read</option>
                  </select>
-                <button type="submit" class="btn submit">Add</button>
-                <button type="button" class="btn cancel">Close</button>
+                <button type="submit" class="submitBtn">Add</button>
+                <button type="button" class="closeAddBtn">Close</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal editModal">
+        <div class="wrapper">
+            <form class="editForm">
+                <label id="index" style="display:hidden;"></label>
+                <label for="title">Book Title</label>
+                <input type="text" id="title" name="title" required>
+                <label for="author">Book Author</label>
+                <input type="text" id="author" name="author" required>
+                <label for="pages">Total Pages</label>
+                <input type="number" id="pages" name="pages" required>
+                <label for="status">Status</label>
+                <select name="status" id="status">
+                    <option value="Not Read" selected>Not Read</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Read">Read</option>
+                 </select>
+                <button type="submit" class="submitBtn">Edit</button>
+                <button type="button" class="closeEditBtn">Close</button>
             </form>
         </div>
     </div>

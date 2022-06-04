@@ -2,13 +2,33 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+    font
+}
+
+button {
+    padding: 5px 10px;
+
 }
 
 .container {
-    margin: auto;
+    margin: 20px auto;
     padding: 20px;
     max-width: 900px;
 }
+
+.menu {
+    display: flex;
+    width: 100%;
+    padding: 20px 0;
+    justify-content: space-between;
+}
+.stats {
+    display: flex;
+    width: 250px;
+    justify-content: space-between;
+}
+
+/* ------ TABLE ------ */
 
 table {
     width: 100%;
@@ -24,11 +44,18 @@ td:first-child {
     padding-left: 0; 
 }
 td:last-child {
-    padding-right: 0; 
+    padding-right: 0;
+    width: 150px;
+    text-align: right;
 }
 
+.notreadBtn {
 
-.popup {
+}
+
+/* ------ POPUP ------ */
+
+.modal {
     position: absolute;
     top: 0;
     display: none;
@@ -43,7 +70,7 @@ td:last-child {
     background-color: white;
     width: 400px;
 }
-.bookForm {
+form {
     min-width: 300px;
     padding: 20px;
 }

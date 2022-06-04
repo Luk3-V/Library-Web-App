@@ -1,8 +1,13 @@
 const table = document.querySelector('tbody');
-const popup = document.querySelector(".popup");
-const openBtn = document.querySelector('.add');
-const closeBtn = document.querySelector('.cancel');
-const form = document.querySelector(".bookForm");
+const addModal = document.querySelector(".addModal");
+const editModal = document.querySelector(".editModal");
+const addBtn = document.querySelector('.addBtn');
+const closeAddBtn = document.querySelector('.closeAddBtn');
+const closeEditBtn = document.querySelector('.closeEditBtn');
+const addForm = document.querySelector(".addForm");
+const editForm = document.querySelector(".editForm");
+const totalCount = document.querySelector(".totalCount");
+const readCount = document.querySelector(".readCount");
 
 let myLibrary = [];
 
@@ -22,17 +27,35 @@ const getBookIndex = (title) => {
     }
     return;
 }
+const editBook = (e) => {
+    e.preventDefault()
+    const i = editForm.childNodes[0].innerHTML;
+    myLibrary[i].title = editForm.title.value;
+    myLibrary[i].author = editForm.author.value;
+    myLibrary[i].pages = editForm.pages.value;
+    myLibrary[i].status = editForm.status.value;
+
+    updateTable();
+    closeEditModal();
+}
 const deleteBook = (e) => {
-    const title = e.target.parentNode.parentNode.childNodes[0];
+    const title = e.currentTarget.parentNode.parentNode.childNodes[0];
     if (confirm(`Are you sure you want to delete ${title.innerText}?`)) {
         const i = getBookIndex(title.innerText);
         myLibrary.splice(i, i+1);
         updateTable();
     }
 }
+const addBook = (e) => {
+    e.preventDefault()
+    const book = new Book(addForm.title.value, addForm.author.value, addForm.pages.value, addForm.status.value);
 
+    myLibrary.push(book);
+    updateTable();
+    closeAddModal();
+}
 const updateStatus = (e) => {
-    const title = e.target.parentNode.parentNode.childNodes[0];
+    const title = e.currentTarget.parentNode.parentNode.childNodes[0];
     const i = getBookIndex(title.innerText);
     if(myLibrary[i].status === 'Not Read')
         myLibrary[i].status = 'In Progress';
@@ -45,6 +68,8 @@ const updateStatus = (e) => {
 
 const resetTable = () => {
     table.innerHTML = '';
+    totalCount.innerHTML = 0;
+    readCount.innerHTML = 0;
 }
 const loadTable = () => {
     for(let i in myLibrary){
@@ -57,16 +82,23 @@ const loadTable = () => {
         const pages = document.createElement('td');
         pages.textContent = myLibrary[i].pages;
 
-
         const status = document.createElement('td');
-        status.innerHTML = '<button class="btn status">'+myLibrary[i].status+'</button>';
+        if(myLibrary[i].status === 'Not Read')
+            status.innerHTML = '<button class="notreadBtn">Not Read</button>';
+        else if(myLibrary[i].status === 'In Progress')
+            status.innerHTML = '<button class="inprogressBtn">In Progress</button>';
+        else
+            status.innerHTML = '<button class="greenBtn">Read</button>';
         status.lastElementChild.onclick = updateStatus;
 
         const action = document.createElement('td');
-        action.innerHTML = '<button class="btn edit">Edit</button><button class="btn delete">Delete</button>';
-        action.firstElementChild.onclick = deleteBook;
+        action.innerHTML = '<button class="editBtn"><i class="fa-solid fa-pen-to-square"></i></button><button class="deleteBtn"><i class="fa-solid fa-trash-can"></i></button>';
+        action.firstElementChild.onclick = openEditModal;
         action.lastElementChild.onclick = deleteBook;
 
+        totalCount.innerHTML = parseInt(totalCount.innerHTML)+1;
+        if(myLibrary[i].status === 'Read')
+            readCount.innerHTML = parseInt(readCount.innerHTML)+1;
 
         row.appendChild(title);
         row.appendChild(author);
@@ -81,32 +113,34 @@ const updateTable = () => {
     loadTable();
 }
 
-const openForm = () => {
-    popup.style.display = "flex";
+const openAddModal = () => {
+    addForm.reset();
+    addModal.style.display = "flex";
 }
-const closeForm = () => {
-    popup.style.display = "none";
-    form.reset();
+const closeAddModal = () => {
+    addModal.style.display = "none";
 }
-
-const addBook = (e) => {
-    e.preventDefault()
-    const title = document.querySelector("#title").value;
-    const author = document.querySelector("#author").value;
-    const pages = document.querySelector("#pages").value;
-    const status = document.querySelector("#status").value;
-    const book = new Book(title, author, pages, status);
-
-    myLibrary.push(book);
-    updateTable();
-    closeForm();
+const openEditModal = (e) => {
+    const title = e.currentTarget.parentNode.parentNode.childNodes[0];
+    const i = getBookIndex(title.innerText);
+    editForm.childNodes[0].innerHTML = i;
+    editForm.title.value = myLibrary[i].title;
+    editForm.author.value = myLibrary[i].author;
+    editForm.pages.value = myLibrary[i].pages;
+    editForm.status.value = myLibrary[i].status;
+    editModal.style.display = "flex";
+}
+const closeEditModal = () => {
+    editModal.style.display = "none";
 }
 
 // ------------- EVENTS --------------
 
-openBtn.onclick = openForm;
-closeBtn.onclick = closeForm;
-form.onsubmit = addBook;
+addBtn.onclick = openAddModal;
+closeAddBtn.onclick = closeAddModal;
+closeEditBtn.onclick = closeEditModal;
+editForm.onsubmit = editBook;
+addForm.onsubmit = addBook;
 
 // ------------- LOAD ---------------
 
